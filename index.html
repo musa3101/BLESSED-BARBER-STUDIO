@@ -128,9 +128,9 @@
           if (cards.length >= 6) {
             const middleIndices = [3, 4, 5];
             const videoSources = [
-              'images/video1.mp4', 
-              'images/video2.mp4', 
-              'images/video3.mp4'
+              './images/video1.mp4', 
+              './images/video2.mp4', 
+              './images/video3.mp4'
             ];
 
             let injectedCount = 0;
@@ -140,14 +140,20 @@
               
               if (container && !container.querySelector('video')) {
                 const img = container.querySelector('img');
-                if (img) img.style.display = 'none';
-
                 const video = document.createElement('video');
+                
+                if (img) {
+                  video.poster = img.src;
+                  img.style.display = 'none';
+                }
+
                 video.dataset.src = videoSources[i];
                 video.muted = true;
                 video.loop = true;
                 video.playsInline = true;
                 video.preload = 'metadata';
+                video.setAttribute('muted', '');
+                video.setAttribute('playsinline', '');
                 
                 video.className = 'w-full h-full object-cover transition-transform duration-700';
                 video.style.width = '100%';
