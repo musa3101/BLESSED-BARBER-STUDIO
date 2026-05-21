@@ -78,19 +78,27 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', () => {
+        // --- Utility ---
+        const debounce = (func, wait) => {
+          let timeout;
+          return (...args) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func(...args), wait);
+          };
+        };
+
         // --- Fix Mobile Menu Link Clicks ---
         document.addEventListener('click', (e) => {
           const anchor = e.target.closest('a[href^="#"]');
           if (anchor) {
             const isMobileMenu = anchor.closest('[role="dialog"]') || anchor.closest('[class*="fixed inset-0"]');
             if (isMobileMenu) {
-              // Radix UI sometimes blocks scroll when a menu is open. We let it close, then smoothly scroll.
               const targetId = anchor.getAttribute('href');
               const targetEl = document.querySelector(targetId);
               if (targetEl) {
                 setTimeout(() => {
                   targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 200); // 200ms delay ensures body scroll lock is completely lifted before scrolling
+                }, 200);
               }
             }
           }
@@ -106,14 +114,16 @@
           });
         }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
 
-        const targets = document.querySelectorAll('.industrial-card, .gallery-card, #servicios .group, #resenas .grid > div, h2');
-        targets.forEach(target => {
-          target.classList.add('reveal', 'reveal-pending');
-          revealObserver.observe(target);
-        });
+        const observeElements = debounce(() => {
+            const targets = document.querySelectorAll('.industrial-card:not(.reveal), .gallery-card:not(.reveal), #servicios .group:not(.reveal), #resenas .grid > div:not(.reveal), h2:not(.reveal)');
+            targets.forEach(target => {
+              target.classList.add('reveal', 'reveal-pending');
+              revealObserver.observe(target);
+            });
+        }, 100);
 
         // --- 2. Gallery Video Injection & Interaction ---
-        const galleryObserver = new MutationObserver((mutations) => {
+        const handleGallery = debounce(() => {
           const cards = document.querySelectorAll('.gallery-card');
           if (cards.length >= 6) {
             const middleIndices = [3, 4, 5];
@@ -133,7 +143,6 @@
                 if (img) img.style.display = 'none';
 
                 const video = document.createElement('video');
-                // Lazy-load trick: don't set src immediately
                 video.dataset.src = videoSources[i];
                 video.muted = true;
                 video.loop = true;
@@ -148,7 +157,7 @@
                 card.addEventListener('mouseenter', () => {
                     if (!video.src) video.src = video.dataset.src;
                     video.play().catch(e => {});
-                    video.style.transform = 'scale(1.03)'; // Reduced zoom
+                    video.style.transform = 'scale(1.03)';
                 });
                 card.addEventListener('mouseleave', () => {
                     video.pause();
@@ -159,20 +168,13 @@
                 card.classList.add('video-card', 'video-injected');
                 injectedCount++;
 
-                // IntersectionObserver to load the video only when scrolled into view (useful for mobile)
                 const lazyVideoObserver = new IntersectionObserver((entries) => {
                   entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                      if (!video.src) {
-                        video.src = video.dataset.src;
-                      }
-                      if (window.innerWidth <= 768) {
-                        video.play().catch(e => {}); // Autoplay on mobile when in view
-                      }
+                      if (!video.src) video.src = video.dataset.src;
+                      if (window.innerWidth <= 768) video.play().catch(e => {});
                     } else {
-                      if (window.innerWidth <= 768) {
-                        video.pause();
-                      }
+                      if (window.innerWidth <= 768) video.pause();
                     }
                   });
                 }, { threshold: 0.1, rootMargin: '200px' });
@@ -180,11 +182,8 @@
               }
             });
 
-            if (injectedCount > 0) {
-              window.dispatchEvent(new Event('resize'));
-            }
+            if (injectedCount > 0) window.dispatchEvent(new Event('resize'));
 
-            // --- 2b. Replace 8th Photo (Index 7) ---
             if (cards.length >= 8) {
               const card8 = cards[7];
               const img = card8.querySelector('img');
@@ -194,26 +193,21 @@
               }
             }
           }
-        });
-
-        galleryObserver.observe(document.body, { childList: true, subtree: true });
+        }, 150);
 
         // --- 3. Production Optimizations (Lazy Loading & UX) ---
-        const optimizeProduction = () => {
-          // Safe text replacements & hiding unwanted mini texts
+        const optimizeProduction = debounce(() => {
           document.querySelectorAll('button, a, p, span, div').forEach(el => {
-              if (el.children.length === 0) { // Only target leaf nodes to be safe
+              if (el.children.length === 0) {
                   const text = el.textContent.trim();
                   if (text.includes('WHATSAPP CON GUSTAVO')) el.textContent = 'RESERVAR CON WHATSAPP';
                   if (text.includes('WhatsApp con servicio')) el.textContent = 'RESERVAR CON WHATSAPP';
                   if (text.includes('631 935 439')) el.textContent = 'PALMA DE MALLORCA';
                   
-                  // Hide unwanted texts directly below the header ("By Gustavo", "Est. 2024 · Palma")
                   if (text === 'By Gustavo' || text === 'Est. 2024 · Palma' || text === 'PREMIUM CUTS.') {
                       el.style.display = 'none';
                       el.style.visibility = 'hidden';
                       const parent = el.closest('div, a, button');
-                      // Safely hide the parent container if it's just a small wrapper
                       if (parent && parent.tagName !== 'NAV' && parent.children.length <= 2) {
                           parent.style.display = 'none';
                       }
@@ -221,27 +215,22 @@
               }
           });
 
-          // Lazy Load Images & Alt tags safety
-          document.querySelectorAll('img').forEach(img => {
+          document.querySelectorAll('img:not(.lazy-applied)').forEach(img => {
             if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
             if (!img.alt) img.alt = "Blessed Barber Studio — Barbería Premium";
-            img.classList.add('transition-opacity', 'duration-500');
+            img.classList.add('transition-opacity', 'duration-500', 'lazy-applied');
           });
 
-          // Map Scroll Protection
           const mapContainer = document.querySelector('#mapa > div:last-child');
-          if (mapContainer) {
-            mapContainer.addEventListener('click', () => {
-              mapContainer.classList.add('map-active');
-            });
-            // Reset map when scrolling away
+          if (mapContainer && !mapContainer.classList.contains('map-observed')) {
+            mapContainer.classList.add('map-observed');
+            mapContainer.addEventListener('click', () => mapContainer.classList.add('map-active'));
             const mapObserver = new IntersectionObserver((entries) => {
               if (!entries[0].isIntersecting) mapContainer.classList.remove('map-active');
             }, { threshold: 0 });
             mapObserver.observe(mapContainer);
           }
 
-          // Inject MYNEXT Credit Line
           const footerPs = document.querySelectorAll('p');
           const copyrightP = Array.from(footerPs).find(p => p.textContent.includes('Blessed Barber Studio. Todos los derechos reservados.'));
           
@@ -251,25 +240,29 @@
             creditP.className = 'mynext-credit';
             creditP.innerHTML = '<a href="https://bymusamynext.netlify.app" target="_blank" rel="noopener noreferrer">Made by MYNEXT</a>';
             
-            // Remove old musa-credit if present (safeguard)
             const oldCredit = document.getElementById('musa-credit');
             if (oldCredit) oldCredit.remove();
 
             copyrightP.parentNode.appendChild(creditP);
           }
-          // Rename Filosofía to Nuestra Esencia with same style
-          document.querySelectorAll('a, button, h2, h3, span').forEach(el => {
+
+          document.querySelectorAll('a:not(.esencia-applied), button:not(.esencia-applied), h2:not(.esencia-applied), h3:not(.esencia-applied), span:not(.esencia-applied)').forEach(el => {
             if (el.textContent.trim().toUpperCase() === 'FILOSOFÍA' || el.textContent.trim() === 'Filosofía') {
               el.textContent = 'Nuestra Esencia';
-              // Just add the class, the CSS will handle the rest
-              el.classList.add('font-serif');
+              el.classList.add('font-serif', 'esencia-applied');
             }
           });
+        }, 150);
+
+        // Combined Observer for Performance
+        const runAll = () => {
+          observeElements();
+          handleGallery();
+          optimizeProduction();
         };
 
-        // Initialize and watch for React/Vite mount
-        optimizeProduction();
-        const globalObserver = new MutationObserver(optimizeProduction);
+        runAll();
+        const globalObserver = new MutationObserver(runAll);
         globalObserver.observe(document.body, { childList: true, subtree: true });
       });
     </script>
