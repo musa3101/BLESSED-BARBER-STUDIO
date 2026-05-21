@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
+    <title>Blessed Barber Studio — Barbería en Palma de Mallorca</title>
+    <meta name="description" content="Blessed Barber Studio. Barbería premium en Palma de Mallorca. Cortes de pelo, degradados, arreglos de barba y afeitado. Reserva tu cita online." />
+    <meta name="keywords" content="barbería, Palma de Mallorca, corte de pelo, degradado, fade, barba, barbero, Blessed Barber Studio" />
+    <meta name="author" content="Blessed Barber Studio" />
+    <meta name="theme-color" content="#0A0A0A" />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="Blessed Barber Studio — Barbería en Palma de Mallorca">
+    <meta property="og:description" content="Barbería premium en Palma. Cortes de pelo, degradados, arreglos de barba y más. Reserva tu cita online.">
+    <meta property="og:image" content="./opengraph.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Blessed Barber Studio — Barbería en Palma de Mallorca">
+    <meta name="twitter:image" content="./opengraph.jpg">
+    <meta name="twitter:description" content="Barbería premium en Palma. Cortes de pelo, degradados, arreglos de barba y más.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./images/logo.png" />
+    <link rel="apple-touch-icon" href="./images/logo.png" />
+
+    <!-- Fonts (preconnect for speed) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Preload critical hero image -->
+    <link rel="preload" as="image" href="./images/hero-new.jpg" />
+
+    <!-- App -->
+    <script type="module" crossorigin src="./assets/index-gynIhAn1.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-nloeWNVQ.css">
+    <link rel="stylesheet" href="./assets/redesign.css">
+
+    <!-- Structured Data for Local Business SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BarberShop",
+      "name": "Blessed Barber Studio",
+      "image": "./images/logo.png",
+      "telephone": "+34631935439",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Carrer Miquel Marquès, 12",
+        "addressLocality": "Palma de Mallorca",
+        "postalCode": "07005",
+        "addressCountry": "ES"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+          "opens": "10:00",
+          "closes": "20:00"
+        }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.85",
+        "reviewCount": "359",
+        "bestRating": "5"
+      },
+      "priceRange": "€€",
+      "url": "https://blessedbarber.netlify.app"
+    }
+    </script>
+  <body>
+    <div id="root"></div>
+    
+    <!-- SEO Helper: H1 required for indexing -->
+    <h1 style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;">Blessed Barber Studio — Barbería Premium en Palma de Mallorca</h1>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // --- Fix Mobile Menu Link Clicks ---
+        document.addEventListener('click', (e) => {
+          const anchor = e.target.closest('a[href^="#"]');
+          if (anchor) {
+            const isMobileMenu = anchor.closest('[role="dialog"]') || anchor.closest('[class*="fixed inset-0"]');
+            if (isMobileMenu) {
+              // Radix UI sometimes blocks scroll when a menu is open. We let it close, then smoothly scroll.
+              const targetId = anchor.getAttribute('href');
+              const targetEl = document.querySelector(targetId);
+              if (targetEl) {
+                setTimeout(() => {
+                  targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 200); // 200ms delay ensures body scroll lock is completely lifted before scrolling
+              }
+            }
+          }
+        }, true);
+
+        // --- 1. Animation Observer ---
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.remove('reveal-pending');
+              entry.target.classList.add('reveal-active');
+            }
+          });
+        }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+
+        const targets = document.querySelectorAll('.industrial-card, .gallery-card, #servicios .group, #resenas .grid > div, h2');
+        targets.forEach(target => {
+          target.classList.add('reveal', 'reveal-pending');
+          revealObserver.observe(target);
+        });
+
+        // --- 2. Gallery Video Injection & Interaction ---
+        const galleryObserver = new MutationObserver((mutations) => {
+          const cards = document.querySelectorAll('.gallery-card');
+          if (cards.length >= 6) {
+            const middleIndices = [3, 4, 5];
+            const videoSources = [
+              'images/video1.mp4', 
+              'images/video2.mp4', 
+              'images/video3.mp4'
+            ];
+
+            let injectedCount = 0;
+            middleIndices.forEach((index, i) => {
+              const card = cards[index];
+              const container = card.querySelector('.img-container');
+              
+              if (container && !container.querySelector('video')) {
+                const img = container.querySelector('img');
+                if (img) img.style.display = 'none';
+
+                const video = document.createElement('video');
+                // Lazy-load trick: don't set src immediately
+                video.dataset.src = videoSources[i];
+                video.muted = true;
+                video.loop = true;
+                video.playsInline = true;
+                video.preload = 'none';
+                
+                video.className = 'w-full h-full object-cover transition-transform duration-700';
+                video.style.width = '100%';
+                video.style.height = '100%';
+                video.style.objectFit = 'cover';
+                
+                card.addEventListener('mouseenter', () => {
+                    if (!video.src) video.src = video.dataset.src;
+                    video.play().catch(e => {});
+                    video.style.transform = 'scale(1.03)'; // Reduced zoom
+                });
+                card.addEventListener('mouseleave', () => {
+                    video.pause();
+                    video.style.transform = 'scale(1.0)';
+                });
+
+                container.appendChild(video);
+                card.classList.add('video-card', 'video-injected');
+                injectedCount++;
+
+                // IntersectionObserver to load the video only when scrolled into view (useful for mobile)
+                const lazyVideoObserver = new IntersectionObserver((entries) => {
+                  entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                      if (!video.src) {
+                        video.src = video.dataset.src;
+                      }
+                      if (window.innerWidth <= 768) {
+                        video.play().catch(e => {}); // Autoplay on mobile when in view
+                      }
+                    } else {
+                      if (window.innerWidth <= 768) {
+                        video.pause();
+                      }
+                    }
+                  });
+                }, { threshold: 0.1, rootMargin: '200px' });
+                lazyVideoObserver.observe(card);
+              }
+            });
+
+            if (injectedCount > 0) {
+              window.dispatchEvent(new Event('resize'));
+            }
+
+            // --- 2b. Replace 8th Photo (Index 7) ---
+            if (cards.length >= 8) {
+              const card8 = cards[7];
+              const img = card8.querySelector('img');
+              if (img && !img.src.includes('fotonuew.png')) {
+                img.src = 'images/fotonuew.png';
+                img.style.objectPosition = 'center';
+              }
+            }
+          }
+        });
+
+        galleryObserver.observe(document.body, { childList: true, subtree: true });
+
+        // --- 3. Production Optimizations (Lazy Loading & UX) ---
+        const optimizeProduction = () => {
+          // Safe text replacements & hiding unwanted mini texts
+          document.querySelectorAll('button, a, p, span, div').forEach(el => {
+              if (el.children.length === 0) { // Only target leaf nodes to be safe
+                  const text = el.textContent.trim();
+                  if (text.includes('WHATSAPP CON GUSTAVO')) el.textContent = 'RESERVAR CON WHATSAPP';
+                  if (text.includes('WhatsApp con servicio')) el.textContent = 'RESERVAR CON WHATSAPP';
+                  if (text.includes('631 935 439')) el.textContent = 'PALMA DE MALLORCA';
+                  
+                  // Hide unwanted texts directly below the header ("By Gustavo", "Est. 2024 · Palma")
+                  if (text === 'By Gustavo' || text === 'Est. 2024 · Palma' || text === 'PREMIUM CUTS.') {
+                      el.style.display = 'none';
+                      el.style.visibility = 'hidden';
+                      const parent = el.closest('div, a, button');
+                      // Safely hide the parent container if it's just a small wrapper
+                      if (parent && parent.tagName !== 'NAV' && parent.children.length <= 2) {
+                          parent.style.display = 'none';
+                      }
+                  }
+              }
+          });
+
+          // Lazy Load Images & Alt tags safety
+          document.querySelectorAll('img').forEach(img => {
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+            if (!img.alt) img.alt = "Blessed Barber Studio — Barbería Premium";
+            img.classList.add('transition-opacity', 'duration-500');
+          });
+
+          // Map Scroll Protection
+          const mapContainer = document.querySelector('#mapa > div:last-child');
+          if (mapContainer) {
+            mapContainer.addEventListener('click', () => {
+              mapContainer.classList.add('map-active');
+            });
+            // Reset map when scrolling away
+            const mapObserver = new IntersectionObserver((entries) => {
+              if (!entries[0].isIntersecting) mapContainer.classList.remove('map-active');
+            }, { threshold: 0 });
+            mapObserver.observe(mapContainer);
+          }
+
+          // Inject MYNEXT Credit Line
+          const footerPs = document.querySelectorAll('p');
+          const copyrightP = Array.from(footerPs).find(p => p.textContent.includes('Blessed Barber Studio. Todos los derechos reservados.'));
+          
+          if (copyrightP && !document.getElementById('mynext-credit')) {
+            const creditP = document.createElement('p');
+            creditP.id = 'mynext-credit';
+            creditP.className = 'mynext-credit';
+            creditP.innerHTML = '<a href="https://bymusamynext.netlify.app" target="_blank" rel="noopener noreferrer">Made by MYNEXT</a>';
+            
+            // Remove old musa-credit if present (safeguard)
+            const oldCredit = document.getElementById('musa-credit');
+            if (oldCredit) oldCredit.remove();
+
+            copyrightP.parentNode.appendChild(creditP);
+          }
+          // Rename Filosofía to Nuestra Esencia with same style
+          document.querySelectorAll('a, button, h2, h3, span').forEach(el => {
+            if (el.textContent.trim().toUpperCase() === 'FILOSOFÍA' || el.textContent.trim() === 'Filosofía') {
+              el.textContent = 'Nuestra Esencia';
+              // Just add the class, the CSS will handle the rest
+              el.classList.add('font-serif');
+            }
+          });
+        };
+
+        // Initialize and watch for React/Vite mount
+        optimizeProduction();
+        const globalObserver = new MutationObserver(optimizeProduction);
+        globalObserver.observe(document.body, { childList: true, subtree: true });
+      });
+    </script>
+  </body>
+</html>

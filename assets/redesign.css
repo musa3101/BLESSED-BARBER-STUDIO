@@ -1,0 +1,1118 @@
+/* 
+   Blessed Barber - Premium Industrial Redesign
+   Primary Accent: #B71C1C (Deep Red)
+   Background: #0A0A0A (Rich Dark)
+*/
+
+:root {
+    --accent-red: #B71C1C;
+    --accent-red-hover: #D32F2F;
+    --bg-dark: #0A0A0A;
+    --bg-card: #141414;
+    --text-primary: #F5F5F5;
+    --text-secondary: #A0A0A0;
+    --font-industrial: 'Oswald', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --glass-bg: rgba(10, 10, 10, 0.85);
+    --safe-area-inset: 1rem;
+}
+
+/* Base Styles & Optimization */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Offset for fixed header */
+}
+
+body {
+    background: #0A0A0A !important;
+    background-image: radial-gradient(circle at 50% 0%, #1a0a0a 0%, #0A0A0A 70%) !important;
+    background-attachment: scroll !important;
+    color: var(--text-primary) !important;
+    font-family: var(--font-body) !important;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-width: 1024px) {
+    body {
+        background-attachment: fixed !important;
+    }
+}
+
+h1, h2, h3, h4, .industrial-font {
+    font-family: var(--font-industrial) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Premium Typography for Menu and Content */
+nav a, 
+nav button,
+.font-serif {
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
+    letter-spacing: 0.02em !important;
+}
+
+/* Ensure all menu items look identical */
+nav [role="menu"] a,
+nav [role="menu"] button,
+#menu-mobile a,
+#menu-mobile button {
+    font-size: 1.25rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+nav [role="menu"] a:hover,
+#menu-mobile a:hover {
+    letter-spacing: 0.1em !important;
+    color: var(--accent-red) !important;
+    padding-left: 0.5rem !important;
+}
+
+/* Accent Overrides - More specific to avoid breaking text visibility */
+.bg-primary, 
+button.bg-primary,
+.btn-primary {
+    background-color: var(--accent-red) !important;
+    color: #FFFFFF !important; /* Ensure text is white on red background */
+}
+
+.text-primary {
+    color: var(--accent-red) !important;
+}
+
+.border-primary {
+    border-color: var(--accent-red) !important;
+}
+
+/* Specific fix for components that might use primary-foreground */
+[class*="primary-foreground"] {
+    color: #FFFFFF !important;
+}
+
+/* Hover & Active Effects - Micro interactions */
+button, .btn, a {
+    will-change: transform, box-shadow;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+button:hover, .btn:hover, a.bg-primary:hover {
+    background-color: var(--accent-red-hover) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 25px rgba(183, 28, 28, 0.45);
+    transform: translateY(-3px) scale(1.02);
+}
+
+button:active, .btn:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 0 10px rgba(183, 28, 28, 0.6) !important;
+}
+
+/* Standard accessible tap targets */
+button, .btn, a.inline-flex, nav button {
+    min-height: 48px;
+    min-width: 48px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Industrial Elements */
+.industrial-card {
+    background: linear-gradient(145deg, #141414, #0f0f0f);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--accent-red);
+    padding: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.industrial-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-red);
+    box-shadow: 0 15px 45px rgba(183, 28, 28, 0.2);
+}
+
+/* WhatsApp Floating Button */
+#whatsapp-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25D366;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 9999;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+#whatsapp-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+#whatsapp-btn svg {
+    width: 32px;
+    height: 32px;
+}
+
+/* Mobile Optimization (375px - 414px) */
+@media (max-width: 480px) {
+    .container {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+    }
+    
+    h1 {
+        font-size: clamp(2.2rem, 10vw, 3rem) !important;
+        line-height: 1.1 !important;
+    }
+    
+    h2 {
+        font-size: 1.8rem !important;
+    }
+    
+    .hero-section {
+        padding: 3rem 0 !important;
+    }
+    
+    /* Ensure buttons are easy to tap on mobile */
+    button, .btn, a.inline-flex {
+        min-height: 44px;
+        padding-top: 0.75rem !important;
+        padding-bottom: 0.75rem !important;
+    }
+
+    #whatsapp-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 55px;
+        height: 55px;
+    }
+}
+
+/* iPad Optimization (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .container {
+        max-width: 90% !important;
+    }
+    
+    #servicios .grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    #galeria .grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #111;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--accent-red);
+    border-radius: 4px;
+}
+
+/* =============================================
+   MAP SECTION — Centered Premium Style
+   ============================================= */
+#mapa {
+    padding-bottom: 5rem !important;
+}
+
+/* The full-width iframe container — override w-full */
+#mapa > div:last-child {
+    width: calc(100% - 3rem) !important;
+    max-width: 1000px !important;
+    margin: 0 auto !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    border: 1.5px solid rgba(183, 28, 28, 0.3) !important;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        0 32px 80px rgba(0, 0, 0, 0.4) !important;
+    position: relative !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    pointer-events: auto !important; /* Fully interactive by default */
+}
+
+#mapa > div:last-child:hover {
+    border-color: var(--accent-red) !important;
+    box-shadow: 
+        0 0 25px rgba(183, 28, 28, 0.5),
+        0 0 50px rgba(183, 28, 28, 0.2),
+        inset 0 0 15px rgba(183, 28, 28, 0.1) !important;
+    transform: translateY(-8px) scale(1.01);
+}
+
+/* Red top-bar accent line on the map */
+#mapa > div:last-child::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent-red), transparent);
+    z-index: 10;
+}
+
+#mapa > div:last-child iframe {
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+    display: block !important;
+    filter: contrast(1.1) brightness(0.9); /* Removed grayscale to make it more 'alive' */
+}
+
+/* Improved style for the Google Maps button */
+#mapa .container + div a,
+#mapa a[href*="maps"] {
+    pointer-events: auto !important; /* Always clickable */
+    z-index: 20 !important;
+}
+
+#mapa > div:last-child {
+    cursor: pointer !important;
+}
+
+#reserva a[href*="maps"] {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    margin-top: 1.5rem !important;
+    padding: 0.5rem 1rem !important; /* Made smaller */
+    background: var(--accent-red) !important; /* Solid red background */
+    border: 2px solid #0A0A0A !important; /* Black border */
+    color: #FFFFFF !important; /* White text for maximum visibility */
+    border-radius: 8px !important;
+    font-size: 0.75rem !important; /* Smaller text */
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+}
+
+#mapa .container + div a:hover,
+#mapa a[href*="maps"]:hover,
+#reserva a[href*="maps"]:hover {
+    background: #D32F2F !important; /* Lighter red on hover */
+    box-shadow: 0 0 15px rgba(183, 28, 28, 0.8) !important;
+    transform: translateY(-2px) !important;
+    opacity: 1 !important;
+}
+
+#mapa a[href*="maps"] svg,
+#reserva a[href*="maps"] svg {
+    width: 14px !important; /* Smaller icon */
+    height: 14px !important;
+}
+
+
+@media (max-width: 640px) {
+    #mapa > div:last-child {
+        width: calc(100% - 2rem) !important;
+        border-radius: 12px !important;
+    }
+}
+
+/* =============================================
+   HERO SECTION — Layout & Overlap Fix
+   ============================================= */
+section.relative.min-h-\[110vh\] img,
+section.relative.min-h-\[105vh\] img {
+    /* Ajuste de posición y zoom para ocultar el texto horneado en la parte superior de la foto */
+    object-position: 50% 20% !important; 
+    transform: scale(1.15) translateY(-5%) !important; 
+    object-fit: cover !important;
+}
+
+/* Capa de seguridad negra en la parte superior para ocultar el texto horneado en la imagen */
+section.relative.min-h-\[110vh\]::after,
+section.relative.min-h-\[105vh\]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 140px;
+    background: linear-gradient(to bottom, #0A0A0A 60%, transparent 100%);
+    z-index: 1; /* Below the nav but above the image */
+    pointer-events: none;
+}
+
+/* Conservamos la del overscroll */
+section.relative.min-h-\[110vh\]::before,
+section.relative.min-h-\[105vh\]::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: #0A0A0A;
+    z-index: 2;
+    pointer-events: none;
+}
+
+@media (min-width: 768px) {
+    section.relative.min-h-\[110vh\] img,
+    section.relative.min-h-\[105vh\] img {
+        object-position: 50% 50% !important;
+        transform: scale(1.0) !important;
+    }
+}
+
+/* Regresamos el texto a su sitio original (abajo a la izquierda) */
+section.relative.min-h-\[110vh\] .container,
+section.relative.min-h-\[105vh\] .container {
+    padding-bottom: 5rem !important; /* Posición original más baja */
+}
+
+/* Hero Text Legibility Enhancement */
+section.relative.min-h-\[110vh\] h1,
+section.relative.min-h-\[110vh\] p,
+section.relative.min-h-\[105vh\] h1,
+section.relative.min-h-\[105vh\] p {
+    text-shadow: 0 0 15px rgba(0,0,0,1), 0 4px 8px rgba(0,0,0,0.9) !important;
+}
+
+/* Localized shadow background only behind the text area */
+section.relative.min-h-\[110vh\] .container > div,
+section.relative.min-h-\[105vh\] .container > div {
+    background: radial-gradient(ellipse at left bottom, rgba(0,0,0,0.5) 0%, transparent 70%) !important;
+    padding: 1.5rem !important;
+    border-radius: 30px;
+}
+
+@media (min-width: 768px) {
+    section.relative.min-h-\[110vh\] .container,
+    section.relative.min-h-\[105vh\] .container {
+        padding-bottom: 3rem !important; /* Slightly lower position */
+        padding-left: 1rem !important; /* More to the left */
+        text-align: left !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-end !important;
+        align-items: flex-start !important;
+    }
+}
+
+/* Mobile adjustments */
+section.relative.min-h-\[110vh\] .container,
+section.relative.min-h-\[105vh\] .container {
+    padding-left: 1rem !important;
+    padding-bottom: 4rem !important;
+}
+
+/* Mantenemos las sombras y el color para que se lea bien aunque esté sobre la gorra */
+h1 {
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 1), 0 0 40px rgba(0, 0, 0, 0.8) !important;
+}
+
+h1 span.text-primary.italic {
+    color: #ff3333 !important;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 1), 0 0 50px rgba(0, 0, 0, 0.9) !important;
+    font-weight: 800 !important;
+}
+
+/* Sombra también para el subtítulo y descripción */
+section.relative.min-h-\[110vh\] p,
+section.relative.min-h-\[105vh\] p {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 1) !important;
+}
+
+
+
+
+
+
+/* Gallery Grid Styles */
+#galeria .grid {
+    display: grid;
+    gap: 2rem;
+}
+
+.gallery-card {
+    background-color: #0A0A0A;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid rgba(183, 28, 28, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    aspect-ratio: 1 / 1; /* Made more square and compact */
+    display: flex;
+    flex-direction: column;
+    position: relative; /* For absolute positioning of info overlay */
+}
+
+.gallery-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent-red);
+    box-shadow: 0 15px 45px rgba(183, 28, 28, 0.3);
+}
+
+.gallery-card .img-container {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.gallery-card .img-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #141414, transparent 40%);
+    opacity: 0.6;
+}
+
+.gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+}
+
+.gallery-card:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-card .info {
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 40%, transparent 100%);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Specific rule: Hide names ONLY for VIDEOS */
+.gallery-card:has(video) .info {
+    display: none !important;
+}
+
+/* Add a clean Play icon indicator with black outline (bordado) */
+.gallery-card:has(video)::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 26px;
+    height: 26px;
+    /* SVG with white fill and black stroke (bordado negro) */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0.5; /* More subtle by default */
+    transition: all 0.4s ease;
+}
+
+.gallery-card:has(video):hover::after {
+    opacity: 1;
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 8px rgba(183, 28, 28, 0.6));
+}
+
+.gallery-card h4 {
+    color: #FFFFFF;
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-card p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.7rem;
+    margin: 0.2rem 0 0 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-card:hover h4,
+.gallery-card:hover p {
+    opacity: 1 !important;
+}
+
+/* Swiper Carousel Custom Styles (Legacy) */
+.custom-swiper-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 2.5rem;
+    padding-bottom: 5rem;
+    padding-left: 70px;
+    padding-right: 70px;
+}
+
+
+.custom-swiper-slide {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 280px;
+    height: auto !important;
+    aspect-ratio: 3 / 4.2;
+    z-index: 1;
+}
+
+.custom-swiper-slide-inner {
+    background-color: #FFFFFF;
+    border-radius: 2rem;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    transform: scale(1);
+}
+
+.custom-swiper-slide:hover .custom-swiper-slide-inner {
+    transform: scale(1.04);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.5), 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 768px) {
+    .custom-swiper-slide {
+        width: 320px;
+    }
+}
+
+.custom-swiper-img-container {
+    width: 100%;
+    height: 70%;
+    overflow: hidden;
+}
+
+.custom-swiper-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(1) saturate(1.1) contrast(1.05);
+    transition: filter 0.4s ease;
+}
+
+.custom-swiper-slide:hover .custom-swiper-img-container img {
+    filter: brightness(1.15) saturate(1.25) contrast(1.1);
+}
+
+.custom-swiper-info {
+    width: 100%;
+    height: 30%;
+    background-color: #FFFFFF;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-top: 1px solid #f3f4f6;
+}
+
+.custom-swiper-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #111111;
+    font-family: var(--font-industrial);
+    line-height: 1.2;
+}
+
+.brand-name {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  background: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #B8860B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.brand-name:hover,
+.brand-name:active {
+  filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.85)) !important;
+  transform: scale(1.03);
+  opacity: 1 !important;
+}
+
+.custom-swiper-desc {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.custom-swiper-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
+.custom-meta-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-meta-label {
+    font-size: 9px;
+    color: #9ca3af;
+    text-transform: uppercase;
+}
+
+.custom-meta-val-gold {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #FFD700;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+}
+
+.custom-meta-val-green {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #39FF14;
+    text-shadow: 0 0 6px rgba(57, 255, 20, 0.4);
+}
+
+.custom-swiper-icon {
+    margin-left: auto;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: #111111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.custom-swiper-slide:hover .custom-swiper-icon {
+    background-color: var(--accent-red);
+}
+
+.custom-swiper-icon svg {
+    fill: #FFFFFF;
+    width: 14px;
+    height: 14px;
+}
+
+/* =============================================
+   SERVICIOS — Price color: Gold like logo
+   Updated: 2026-05-06 00:36
+   ============================================= */
+section#servicios .text-primary {
+    background-image: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #B8860B 100%) !important;
+    background-color: transparent !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: #FFD700 !important; /* Fallback gold */
+    display: inline-block !important; /* Helps Safari with text gradients */
+}
+
+/* =============================================
+   SERVICIOS — Premium Gold Emoji Icons
+   ============================================= */
+#servicios span[aria-hidden="true"] {
+    filter: grayscale(1) sepia(1) hue-rotate(-15deg) saturate(6) brightness(1) contrast(1.1) drop-shadow(0 2px 4px rgba(0,0,0,0.4)) !important;
+    opacity: 0.85;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    display: inline-block !important;
+}
+
+#servicios .group:hover span[aria-hidden="true"] {
+    filter: grayscale(0) sepia(0) saturate(1.2) brightness(1.2) drop-shadow(0 0 12px rgba(212, 175, 55, 0.9)) !important;
+    opacity: 1;
+    transform: scale(1.2) rotate(8deg) !important;
+}
+
+/* Specific glow for the gold prices */
+#servicios .group:hover .text-primary {
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.8));
+}
+
+/* =============================================
+   RESEÑAS — Review Cards Lighter Background
+   ============================================= */
+#resenas .grid > div {
+    background: rgba(36, 36, 36, 0.7) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border-color: rgba(212, 175, 55, 0.2) !important;
+    box-shadow: 
+        0 4px 24px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+#resenas .grid > div:hover {
+    background: rgba(44, 44, 44, 0.8) !important;
+    border-color: rgba(212, 175, 55, 0.5) !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.45),
+        0 0 24px rgba(212, 175, 55, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-5px) !important;
+}
+
+/* The big rating badge at top */
+#resenas .inline-flex {
+    background: #1e1e1e !important;
+}
+
+/* =============================================
+   1. HIDE THE DOT AFTER "Blessed Barber Studio"
+   ============================================= */
+.brand-name > span:last-child {
+    display: none !important;
+}
+
+/* =============================================
+   2. MAP — Normal Colors
+   ============================================= */
+#mapa iframe {
+    filter: none !important;
+}
+
+/* Warm accent glow behind the map container */
+#mapa > div:last-child::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(183, 28, 28, 0.06) 0%,
+        transparent 40%,
+        transparent 60%,
+        rgba(212, 175, 55, 0.05) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* =============================================
+   3. NAV BUTTONS — Both with Red Border Style
+   ============================================= */
+/* Reservar button — keep original red border look */
+nav .border-2.border-primary {
+    border-width: 2px !important;
+    border-color: var(--accent-red) !important;
+    color: var(--accent-red) !important;
+    background: transparent !important;
+    box-shadow: 0 0 12px rgba(183, 28, 28, 0.25) !important;
+    padding: 0.6rem 1.35rem !important; /* Slightly smaller padding */
+    font-size: 0.95rem !important; /* Slightly smaller font */
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease !important;
+}
+
+nav .border-2.border-primary:hover {
+    background: var(--accent-red) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 25px rgba(183, 28, 28, 0.6) !important;
+    transform: translateY(-2px);
+}
+
+/* Menú button — match the same red border style */
+nav button[aria-label="Abrir menú"] {
+    border: 2px solid var(--accent-red) !important;
+    color: var(--accent-red) !important;
+    background: transparent !important;
+    box-shadow: 0 0 12px rgba(183, 28, 28, 0.25) !important;
+    padding: 0.6rem 1.15rem !important; /* Slightly smaller padding */
+    font-size: 0.95rem !important; /* Slightly smaller font */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease !important;
+}
+
+nav button[aria-label="Abrir menú"]:hover {
+    background: var(--accent-red) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 25px rgba(183, 28, 28, 0.6) !important;
+    transform: translateY(-2px);
+}
+
+/* Glassmorphism for Navbar - Optimized */
+nav {
+    background: rgba(10, 10, 10, 0.8) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    transition: background 0.3s ease !important;
+}
+
+@media (max-width: 768px) {
+    nav {
+        backdrop-filter: none !important; /* Disable blur on mobile if it lags */
+        -webkit-backdrop-filter: none !important;
+        background: rgba(10, 10, 10, 0.95) !important;
+    }
+}
+
+/* Pulse animation for the main CTA */
+@keyframes pulse-red-subtle {
+    0% { box-shadow: 0 0 0 0 rgba(183, 28, 28, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(183, 28, 28, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(183, 28, 28, 0); }
+}
+
+nav .border-2.border-primary {
+    animation: pulse-red-subtle 3s infinite !important;
+}
+
+/* =============================================
+   4. MOBILE OPTIMIZATIONS
+   ============================================= */
+@media (max-width: 768px) {
+    /* Fix Logo breaking into two lines and hide ghost text */
+    nav .brand-name {
+        font-size: 1.15rem !important;
+        white-space: nowrap !important;
+        position: relative;
+    }
+    
+    /* Hide any ghost/absolute positioned text that might be floating around */
+    nav .brand-name span:not(:first-child) {
+        display: none !important;
+    }
+    nav img[alt="Blessed Barber Studio"] {
+        height: 2.75rem !important;
+        width: 2.75rem !important;
+    }
+    nav {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+    }
+
+    /* Reduce Floating WhatsApp Button Size */
+    button[aria-label="Reservar por WhatsApp"] {
+        width: 3.5rem !important;
+        height: 3.5rem !important;
+        bottom: 1rem !important;
+        right: 1rem !important;
+    }
+    button[aria-label="Reservar por WhatsApp"] svg {
+        width: 1.75rem !important;
+        height: 1.75rem !important;
+    }
+
+    /* Reduce Reservation WhatsApp/Booksy Box Size */
+    #reserva a.p-6,
+    #reserva button.p-6 {
+        padding: 1rem 1.25rem !important;
+        gap: 0.75rem !important;
+    }
+    #reserva a.p-6 .text-lg,
+    #reserva button.p-6 .text-lg {
+        font-size: 1.1rem !important;
+    }
+    #reserva a.p-6 svg.w-7,
+    #reserva button.p-6 svg.w-7 {
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+    }
+}
+
+/* =============================================
+   5. PREMIUM ENTRANCE ANIMATIONS
+   ============================================= */
+/* NOTE: reveal starts visible to prevent black gaps if observer fails */
+.reveal {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+/* JS will add reveal-pending BEFORE adding reveal class */
+.reveal-pending {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.reveal-active {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Delay for children in grid */
+#servicios .group:nth-child(2),
+#resenas .grid > div:nth-child(2) { transition-delay: 0.1s !important; }
+#servicios .group:nth-child(3),
+#resenas .grid > div:nth-child(3) { transition-delay: 0.2s !important; }
+/* =============================================
+   6. LOGO & HERO TWEAKS
+   ============================================= */
+/* Quitar el fondo blanco/crema del logo y hacerlo redondo */
+img[alt="Blessed Barber Studio"], 
+.rounded-full.bg-\[\#f4ece0\] {
+    background-color: #000000 !important;
+    border-radius: 50% !important;
+    padding: 2px !important;
+    border: 2px solid #FFD700 !important; /* Refined 2px Yellow/Gold border */
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3) !important;
+    transition: all 0.4s ease !important;
+}
+
+img[alt="Blessed Barber Studio"]:hover, 
+.rounded-full.bg-\[\#f4ece0\]:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6) !important;
+}
+
+/* Ocultar capas de texto extra si existieran en el DOM */
+h1 span.pointer-events-none,
+h2 span.pointer-events-none,
+nav span.absolute, 
+nav p.absolute {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Specific fix for the 'hidden yellow text' near logo */
+.brand-name::before, .brand-name::after {
+    content: none !important;
+}
+
+.mynext-credit {
+    font-size: 11px !important;
+    opacity: 0.8;
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+    color: var(--text-secondary);
+    font-family: var(--font-serif); /* Using premium serif for credit */
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.mynext-credit a {
+    color: var(--accent-red); /* Red credit link */
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    padding: 2px 8px;
+    border: 1px solid transparent;
+}
+
+.mynext-credit a:hover {
+    color: #FFFFFF;
+    background: var(--accent-red);
+    border-color: var(--accent-red);
+    box-shadow: 0 0 15px rgba(183, 28, 28, 0.4);
+}
+
+/* Fix pointer events for mobile menu links */
+[role="dialog"] a,
+[role="dialog"] button,
+.fixed.inset-0 a,
+.fixed.inset-0 button {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+/* Lazy loading placeholder effect */
+.lazy-loading {
+    background: linear-gradient(90deg, #141414 25%, #1a1a1a 50%, #141414 75%);
+    background-size: 200% 100%;
+    animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+}
+
+/* =============================================
+   7. MENU CLOSE BUTTON (X) REDESIGN
+   ============================================= */
+/* Targets the close button in the mobile/overlay menu */
+button.absolute.right-4.top-4,
+button[aria-label*="Close"],
+button[aria-label*="Cerrar"] {
+    width: 42px !important;
+    height: 42px !important;
+    border: 1.5px solid var(--accent-red) !important;
+    background: rgba(10, 10, 10, 0.9) !important;
+    color: var(--accent-red) !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(183, 28, 28, 0.2) !important;
+    backdrop-filter: blur(4px) !important;
+    z-index: 9999 !important;
+}
+
+button.absolute.right-4.top-4:hover,
+button[aria-label*="Close"]:hover {
+    background: var(--accent-red) !important;
+    color: #FFFFFF !important;
+    transform: rotate(90deg) scale(1.05) !important;
+    box-shadow: 0 0 25px rgba(183, 28, 28, 0.6) !important;
+    border-color: #FFFFFF !important;
+}
+
+/* Ensure the X icon inside is centered and properly sized */
+button.absolute.right-4.top-4 svg,
+button[aria-label*="Close"] svg {
+    width: 20px !important;
+    height: 20px !important;
+    stroke-width: 2.5 !important;
+}
+
+/* Hide the WhatsApp button subtitle (Safe CSS method) */
+button.bg-\[\#25D366\] .text-xs.tracking-widest.uppercase,
+button.bg-\[\#25D366\] div.opacity-80 {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    visibility: hidden !important;
+}
