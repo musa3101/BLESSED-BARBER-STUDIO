@@ -147,21 +147,33 @@
                 video.muted = true;
                 video.loop = true;
                 video.playsInline = true;
-                video.preload = 'none';
+                video.preload = 'metadata';
                 
                 video.className = 'w-full h-full object-cover transition-transform duration-700';
                 video.style.width = '100%';
                 video.style.height = '100%';
                 video.style.objectFit = 'cover';
                 
-                card.addEventListener('mouseenter', () => {
-                    if (!video.src) video.src = video.dataset.src;
+                const playVideo = () => {
+                    if (!video.getAttribute('src')) video.setAttribute('src', video.dataset.src);
                     video.play().catch(e => {});
                     video.style.transform = 'scale(1.03)';
-                });
-                card.addEventListener('mouseleave', () => {
+                };
+
+                const pauseVideo = () => {
                     video.pause();
                     video.style.transform = 'scale(1.0)';
+                };
+
+                card.addEventListener('mouseenter', playVideo);
+                card.addEventListener('mouseleave', pauseVideo);
+                
+                // Add click toggle for better accessibility / touch devices
+                card.addEventListener('click', (e) => {
+                    if (window.innerWidth > 768) {
+                        if (video.paused) playVideo();
+                        else pauseVideo();
+                    }
                 });
 
                 container.appendChild(video);
@@ -171,7 +183,7 @@
                 const lazyVideoObserver = new IntersectionObserver((entries) => {
                   entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                      if (!video.src) video.src = video.dataset.src;
+                      if (!video.getAttribute('src')) video.setAttribute('src', video.dataset.src);
                       if (window.innerWidth <= 768) video.play().catch(e => {});
                     } else {
                       if (window.innerWidth <= 768) video.pause();
