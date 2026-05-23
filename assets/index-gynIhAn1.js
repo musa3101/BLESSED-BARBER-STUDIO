@@ -27916,7 +27916,7 @@ function S4() {
                       children: b.jsx(cr, { className: "w-5 h-5 text-white" }),
                     }),
                     b.jsxs("div", {
-                      className: "min-w-0 flex-1",
+                      className: "min-w-0 flex-1 pr-12",
                       children: [
                         step === 2 &&
                           b.jsxs("button", {
