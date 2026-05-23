@@ -1107,6 +1107,25 @@ button[aria-label*="Close"] svg {
     stroke-width: 2.5 !important;
 }
 
+@media (max-width: 639px) {
+    button.absolute.right-4.top-4,
+    button[aria-label*="Close"],
+    button[aria-label*="Cerrar"] {
+        width: 30px !important;
+        height: 30px !important;
+        top: 27px !important;
+        right: 16px !important;
+        border-radius: 6px !important;
+    }
+    
+    button.absolute.right-4.top-4 svg,
+    button[aria-label*="Close"] svg {
+        width: 14px !important;
+        height: 14px !important;
+        stroke-width: 2.2 !important;
+    }
+}
+
 /* Hide the WhatsApp button subtitle (Safe CSS method) */
 button.bg-\[\#25D366\] .text-xs.tracking-widest.uppercase,
 button.bg-\[\#25D366\] div.opacity-80 {
@@ -1211,36 +1230,3 @@ button.bg-\[\#25D366\] div.opacity-80 {
         border-radius: 16px !important;
     }
 }
-
-/* Specific close button redesign inside the booking modal */
-.modal-booking-container button.absolute.right-4.top-4,
-.modal-booking-container button[aria-label*="Close"],
-.modal-booking-container button[aria-label*="Cerrar"] {
-    width: 32px !important;
-    height: 32px !important;
-    right: 16px !important;
-    top: 26px !important; /* Centered with the header height */
-    border: 1px solid var(--accent-red) !important;
-    background: rgba(10, 10, 10, 0.9) !important;
-    color: var(--accent-red) !important;
-    border-radius: 6px !important;
-    box-shadow: none !important;
-    backdrop-filter: blur(4px) !important;
-}
-
-.modal-booking-container button.absolute.right-4.top-4:hover,
-.modal-booking-container button[aria-label*="Close"]:hover {
-    background: var(--accent-red) !important;
-    color: #FFFFFF !important;
-    transform: rotate(90deg) scale(1.05) !important;
-    box-shadow: 0 0 15px rgba(183, 28, 28, 0.4) !important;
-    border-color: #FFFFFF !important;
-}
-
-.modal-booking-container button.absolute.right-4.top-4 svg,
-.modal-booking-container button[aria-label*="Close"] svg {
-    width: 16px !important;
-    height: 16px !important;
-    stroke-width: 2.2 !important;
-}
-
