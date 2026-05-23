@@ -1116,3 +1116,79 @@ button.bg-\[\#25D366\] div.opacity-80 {
     padding: 0 !important;
     visibility: hidden !important;
 }
+
+/* =============================================
+   8. PREMIUM BOOKING MODAL BUTTONS
+   ============================================= */
+.modal-booking-btn {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-primary) !important;
+    padding: 1rem 1.5rem !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    min-height: auto !important;
+}
+
+.modal-booking-btn:last-child {
+    border-bottom: none !important;
+}
+
+.modal-booking-btn:hover {
+    background: rgba(212, 175, 55, 0.08) !important; /* Subtle premium gold tint */
+    border-color: rgba(212, 175, 55, 0.2) !important;
+    box-shadow: none !important;
+    transform: translateX(6px) !important; /* Smooth slide-in micro-animation */
+}
+
+/* Ensure text elements inside the button style correctly */
+.modal-booking-btn .font-serif {
+    color: var(--text-primary) !important;
+    transition: color 0.3s ease !important;
+}
+
+.modal-booking-btn:hover .font-serif {
+    color: #FFD700 !important; /* Gold text highlight on hover */
+}
+
+/* For the barber name text in step 2 */
+.modal-booking-btn div {
+    transition: color 0.3s ease !important;
+}
+
+.modal-booking-btn:hover div {
+    color: var(--text-primary) !important;
+}
+
+.modal-booking-btn:hover .text-primary {
+    color: #FFD700 !important; /* Gold price/arrow highlight */
+}
+
+/* Ensure subtext (duration/role) stays subtle but readable */
+.modal-booking-btn .text-muted-foreground {
+    color: var(--text-secondary) !important;
+    transition: color 0.3s ease !important;
+}
+
+.modal-booking-btn:hover .text-muted-foreground {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Emoji / Icon zoom effect */
+.modal-booking-btn span[aria-hidden="true"],
+.modal-booking-btn span {
+    transition: transform 0.3s ease !important;
+}
+
+.modal-booking-btn:hover span[aria-hidden="true"],
+.modal-booking-btn:hover span {
+    transform: scale(1.15) !important;
+}
+
