@@ -27902,7 +27902,7 @@ function S4() {
           }
         },
         children: b.jsxs(XS, {
-          className: "bg-card border-primary/20 max-w-lg p-0 overflow-hidden",
+          className: "bg-card border-primary/20 max-w-lg p-0 overflow-hidden modal-booking-container",
           children: [
             b.jsx("div", {
               className: "bg-[#25D366]/10 px-6 py-5 border-b border-primary/10",

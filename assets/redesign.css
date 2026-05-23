@@ -1192,3 +1192,22 @@ button.bg-\[\#25D366\] div.opacity-80 {
     transform: scale(1.15) !important;
 }
 
+/* =============================================
+   9. PREMIUM BOOKING MODAL CONTAINER MOBILE OPTIMIZATION
+   ============================================= */
+.modal-booking-container {
+    width: 92% !important;
+    max-width: 480px !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: #121212 !important; /* Premium deep dark card background */
+}
+
+@media (min-width: 640px) {
+    .modal-booking-container {
+        width: 100% !important;
+        max-width: 480px !important;
+        border-radius: 16px !important;
+    }
+}
