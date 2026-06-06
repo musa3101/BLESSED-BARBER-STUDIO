@@ -33,7 +33,7 @@
     <link rel="preload" as="image" href="./images/hero-new.jpg" />
 
     <!-- App -->
-    <script type="module" crossorigin src="./assets/index-gynIhAn1.js?v=6"></script>
+    <script type="module" crossorigin src="./assets/index-gynIhAn1.js?v=7"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-nloeWNVQ.css">
     <link rel="stylesheet" href="./assets/redesign.css?v=4">
 
@@ -77,7 +77,71 @@
     <h1 style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;">Blessed Barber Studio — Barbería Premium en Palma de Mallorca</h1>
 
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
+      // Global Modal Handler Definitions
+      window.modalContents = {
+        'quienes-somos': {
+          title: '¿Quiénes somos?',
+          body: `
+            <p><strong>Blessed Barber Studio</strong> es un concepto exclusivo de barbería de autor y cuidado masculino premium situado en Palma de Mallorca. Fundado por el reconocido estilista y barbero <strong>Gustavo</strong>, el estudio nace de la necesidad de rescatar el alma de la barbería tradicional —el corte artesanal con navaja, el trato pausado y la buena conversación— combinándolo con las tendencias internacionales más vanguardistas en degradados (fades), diseños de trazo, texturizados y tratamientos capilares.</p>
+            <p>En Blessed no creemos en los servicios automatizados ni a contrarreloj. Cada servicio es un ritual de precisión adaptado a la morfología craneal y estilo de vida de cada cliente. Entrar en nuestro espacio es desconectar del estrés del día a día, disfrutar del mejor hilo musical del género urbano actual y salir sintiendo tu versión más confiada y refinada.</p>
+          `
+        },
+        'faq': {
+          title: 'Preguntas Frecuentes',
+          body: `
+            <div style="display:flex; flex-direction:column; gap:1.25rem;">
+              <div>
+                <strong style="color:#FFFFFF; font-size:0.95rem; display:block; margin-bottom:0.25rem;">1. ¿Es necesario reservar cita antes de ir?</strong>
+                <p style="margin:0;">Aunque siempre recomendamos reservar de forma anticipada a través de nuestro portal de <strong>Booksy</strong> o por <strong>WhatsApp</strong> para garantizar que el Maestro Gustavo te atienda a la hora deseada sin esperas, también puedes acudir directamente al estudio y te daremos paso si existe algún hueco libre en la agenda.</p>
+              </div>
+              <div>
+                <strong style="color:#FFFFFF; font-size:0.95rem; display:block; margin-bottom:0.25rem;">2. ¿Qué métodos de pago tenéis disponibles?</strong>
+                <p style="margin:0;">Para tu total comodidad, en el local aceptamos pagos en <strong>efectivo</strong>, transferencias instantáneas mediante <strong>Bizum</strong> y cobros con <strong>tarjetas de crédito y débito</strong> (Visa, Mastercard, etc.).</p>
+              </div>
+              <div>
+                <strong style="color:#FFFFFF; font-size:0.95rem; display:block; margin-bottom:0.25rem;">3. ¿Dónde está ubicado el estudio y cuál es su horario?</strong>
+                <p style="margin:0;">Estamos ubicados en la <strong>Carrer Miquel Marquès, 12, 07005 Palma de Mallorca</strong>. Nuestro horario de atención preferente es de lunes a sábado de 10:00 a 20:00.</p>
+              </div>
+              <div>
+                <strong style="color:#FFFFFF; font-size:0.95rem; display:block; margin-bottom:0.25rem;">4. ¿Con cuánta antelación debo cancelar o modificar mi cita?</strong>
+                <p style="margin:0;">Si por cualquier imprevisto necesitas cambiar o anular tu cita, te solicitamos que lo hagas con un mínimo de <strong>2 horas de antelación</strong>, ya sea desde la app de Booksy o escribiéndonos directamente. Esto nos permite reorganizar el día y ofrecer ese espacio a otro cliente.</p>
+              </div>
+            </div>
+          `
+        },
+        'aviso-legal': {
+          title: 'Aviso Legal & Propiedad',
+          body: `
+            <p><strong>1. Propiedad Intelectual y Autoría Digital:</strong><br>Este sitio web, el código fuente en su totalidad, la arquitectura lógica, la optimización SEO, los estilos CSS y la interfaz visual de usuario (UI/UX) han sido conceptualizados, diseñados y programados de forma exclusiva por <strong>MYNEXT</strong>.</p>
+            <p><strong>2. Derechos sobre el Contenido de Blessed Barber Studio:</strong><br>Los derechos comerciales sobre el logotipo, las fotografías de cortes de cabello e instalaciones de la barbería expuestos en este sitio web corresponden de forma íntegra a Blessed Barber Studio. Queda terminantemente prohibido extraer, descargar, re-hostear o copiar cualquiera de las imágenes y recursos multimedia aquí mostrados.</p>
+            <p><strong>3. Restricciones de Copia y Uso Ilícito:</strong><br>Se prohíbe de forma expresa a terceros cualquier intento de plagio del diseño web, clonado de código HTML/JS/CSS, ingeniería inversa de los bundles o comercialización y explotación sin una licencia escrita concedida de manera oficial por <strong>MYNEXT</strong>. Cualquier copia parcial o réplica fraudulenta será denunciada bajo la legislación comunitaria europea de patentes y propiedad intelectual.</p>
+            <p><strong>4. Entorno de Ejecución:</strong><br>La plataforma y los créditos de diseño de este portal web de Blessed Barber Studio pertenecen de forma exclusiva al portafolio digital de <a href="https://mynextbymusa.pages.dev/" target="_blank" style="color:#B71C1C;text-decoration:underline;font-weight:bold;">MYNEXT</a>.</p>
+          `
+        }
+      };
+
+      window.openLegalModal = (type) => {
+        const modal = document.getElementById('mynext-legal-modal-root');
+        const titleText = document.getElementById('mynext-legal-title-text');
+        const bodyText = document.getElementById('mynext-legal-body-text');
+        if (modal && titleText && bodyText && window.modalContents[type]) {
+          const content = window.modalContents[type];
+          titleText.innerText = content.title;
+          bodyText.innerHTML = content.body;
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      };
+
+      window.closeLegalModal = () => {
+        const modal = document.getElementById('mynext-legal-modal-root');
+        if (modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      };
+
+      function init() {
         // --- Utility ---
         const debounce = (func, wait) => {
           let timeout;
@@ -167,7 +231,6 @@
                 };
 
                 const pauseVideo = () => {
-                    video.pause();
                     video.style.transform = 'scale(1.0)';
                 };
 
@@ -176,9 +239,11 @@
                 
                 // Add click toggle for better accessibility / touch devices
                 card.addEventListener('click', (e) => {
-                    if (window.innerWidth > 768) {
-                        if (video.paused) playVideo();
-                        else pauseVideo();
+                    if (video.paused) {
+                        if (!video.getAttribute('src')) video.setAttribute('src', video.dataset.src);
+                        video.play().catch(e => {});
+                    } else {
+                        video.pause();
                     }
                 });
 
@@ -190,12 +255,12 @@
                   entries.forEach(entry => {
                     if (entry.isIntersecting) {
                       if (!video.getAttribute('src')) video.setAttribute('src', video.dataset.src);
-                      if (window.innerWidth <= 768) video.play().catch(e => {});
+                      video.play().catch(e => {});
                     } else {
-                      if (window.innerWidth <= 768) video.pause();
+                      video.pause();
                     }
                   });
-                }, { threshold: 0.1, rootMargin: '200px' });
+                }, { threshold: 0.15 });
                 lazyVideoObserver.observe(card);
               }
             });
@@ -204,16 +269,15 @@
 
             if (cards.length >= 8) {
               const card8 = cards[7];
-              const img = card8.querySelector('img');
-              if (img && !img.src.includes('fotonuew.png')) {
-                img.src = 'images/fotonuew.png';
-                img.style.objectPosition = 'center';
+              const img8 = card8.querySelector('img');
+              if (img8 && !img8.src.includes('fotonuew.png')) {
+                img8.src = './images/fotonuew.png';
               }
             }
           }
         }, 150);
 
-        // --- 3. Production Optimizations (Lazy Loading & UX) ---
+        // --- 3. Production Fixes & CSS Polish ---
         const optimizeProduction = debounce(() => {
           document.querySelectorAll('button, a, p, span, div').forEach(el => {
               if (el.children.length === 0) {
@@ -256,7 +320,7 @@
             const creditP = document.createElement('p');
             creditP.id = 'mynext-credit';
             creditP.className = 'mynext-credit';
-            creditP.innerHTML = '<a href="https://mynextbymusa.pages.dev/" target="_blank" rel="noopener noreferrer">Made by MYNEXT</a>';
+            creditP.innerHTML = 'Made by <a href="https://mynextbymusa.pages.dev/" target="_blank" rel="noopener noreferrer" class="mynext-link">MYNEXT</a>';
             
             const oldCredit = document.getElementById('musa-credit');
             if (oldCredit) oldCredit.remove();
@@ -282,7 +346,23 @@
         runAll();
         const globalObserver = new MutationObserver(runAll);
         globalObserver.observe(document.body, { childList: true, subtree: true });
-      });
+      }
+
+      // Safe Init Runner
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
     </script>
+
+    <!-- Static Premium Legal Modal Root -->
+    <div id="mynext-legal-modal-root" class="mynext-legal-modal" onclick="if(event.target === this) closeLegalModal()">
+      <div class="mynext-legal-content">
+        <button class="mynext-legal-close" onclick="closeLegalModal()">✕</button>
+        <h3 class="mynext-legal-title" id="mynext-legal-title-text"></h3>
+        <div class="mynext-legal-body" id="mynext-legal-body-text"></div>
+      </div>
+    </div>
   </body>
 </html>

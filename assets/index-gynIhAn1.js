@@ -27283,17 +27283,17 @@ function S4() {
               className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8",
               children: [
                 {
-                  src: "./images/corte-01.jpg",
+                  src: "./images/corte-01.jpg?v=2",
                   name: "Golden Fade",
                   desc: "Degradado perfecto, 0 a medio",
                 },
                 {
-                  src: "./images/corte-02.jpg",
+                  src: "./images/corte-02.jpg?v=2",
                   name: "Textured Crop",
                   desc: "Estilo moderno y fresco",
                 },
                 {
-                  src: "./images/corte-03.jpg",
+                  src: "./images/corte-03.jpg?v=2",
                   name: "Classic Pompadour",
                   desc: "Elegancia atemporal",
                 },
@@ -27318,7 +27318,7 @@ function S4() {
                   desc: "Contraste extremo",
                 },
                 {
-                  src: "./images/corte-08.jpg",
+                  src: "./images/corte-08.jpg?v=2",
                   name: "Beard & Hair",
                   desc: "El combo completo",
                 },
@@ -28067,40 +28067,97 @@ function S4() {
         }),
       }),
       b.jsx("footer", {
-        className:
-          "bg-background border-t border-white/10 py-12 pb-28 md:pb-12 text-center",
+        className: "bg-background border-t border-white/10 py-16 pb-32 md:pb-16",
         children: b.jsxs("div", {
-          className: "container mx-auto px-6 flex flex-col items-center",
+          className: "container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10 items-start",
           children: [
-            b.jsx("img", {
-              src: "./images/logo.png",
-              alt: "Blessed Barber Studio",
-              className:
-                "h-24 w-24 object-contain rounded-full bg-[#f4ece0] p-2 mb-4",
-            }),
-            b.jsx("div", {
-              className: "text-primary font-serif text-2xl mb-6",
-              children: "Blessed Barber Studio",
-            }),
-            b.jsx("div", {
-              className: "flex gap-6 mb-8",
-              children: b.jsx("a", {
-                href: "https://www.instagram.com/blessed.barberstudiooo?igsh=MXh2dTNvNDdhYWltNw==",
-                target: "_blank",
-                rel: "noopener noreferrer",
-                className:
-                  "text-muted-foreground hover:text-primary transition-colors",
-                children: b.jsx(g2, { className: "w-5 h-5" }),
-              }),
-            }),
-            b.jsxs("p", {
-              className: "text-sm text-muted-foreground pb-4",
+            b.jsxs("div", {
+              className: "flex flex-col gap-4 text-center md:text-left",
               children: [
-                "© ",
-                new Date().getFullYear(),
-                " Blessed Barber Studio. Todos los derechos reservados.",
-              ],
+                b.jsx("h4", {
+                  className: "text-white text-xs uppercase tracking-widest font-bold border-b border-white/10 pb-2 max-w-[150px] mx-auto md:mx-0",
+                  children: "Secciones"
+                }),
+                b.jsxs("div", {
+                  className: "flex flex-col gap-2.5 text-xs text-muted-foreground",
+                  children: [
+                    b.jsx("a", { href: "#filosofia", className: "hover:text-primary transition-colors", children: "Nuestra Esencia" }),
+                    b.jsx("a", { href: "#servicios", className: "hover:text-primary transition-colors", children: "Servicios" }),
+                    b.jsx("a", { href: "#galeria", className: "hover:text-primary transition-colors", children: "Galería" }),
+                    b.jsxs("a", {
+                      href: lr,
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                      className: "hover:text-primary transition-colors",
+                      children: "Reservar en Booksy"
+                    })
+                  ]
+                })
+              ]
             }),
+            b.jsxs("div", {
+              className: "flex flex-col items-center text-center gap-4",
+              children: [
+                b.jsx("img", {
+                  src: "./images/logo.png",
+                  alt: "Blessed Barber Studio",
+                  className: "h-20 w-20 object-contain rounded-full bg-[#f4ece0] p-2 mb-1",
+                }),
+                b.jsx("div", {
+                  className: "text-primary font-serif text-2xl font-semibold",
+                  children: "Blessed Barber Studio",
+                }),
+                b.jsxs("div", {
+                  className: "flex gap-4",
+                  children: [
+                    b.jsx("a", {
+                      href: "https://www.instagram.com/blessed.barberstudiooo?igsh=MXh2dTNvNDdhYWltNw==",
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                      className: "text-muted-foreground hover:text-primary transition-colors p-2 bg-white/5 rounded-full hover:bg-white/10",
+                      children: b.jsx(g2, { className: "w-4 h-4" }),
+                    }),
+                  ]
+                }),
+                b.jsxs("p", {
+                  className: "text-[11px] text-muted-foreground/50 mt-2",
+                  children: [
+                    "© ",
+                    new Date().getFullYear(),
+                    " Blessed Barber Studio. Todos los derechos reservados.",
+                  ]
+                })
+              ]
+            }),
+            b.jsxs("div", {
+              className: "flex flex-col gap-4 text-center md:text-right md:items-end",
+              children: [
+                b.jsx("h4", {
+                  className: "text-white text-xs uppercase tracking-widest font-bold border-b border-white/10 pb-2 max-w-[150px] mx-auto md:mr-0 md:ml-auto w-full",
+                  children: "Soporte y Legal"
+                }),
+                b.jsxs("div", {
+                  className: "flex flex-col gap-2.5 text-xs text-muted-foreground items-center md:items-end",
+                  children: [
+                    b.jsx("button", {
+                      className: "hover:text-primary transition-colors cursor-pointer text-center md:text-right",
+                      onClick: () => window.openLegalModal && window.openLegalModal("quienes-somos"),
+                      children: "¿Quiénes somos?"
+                    }),
+                    b.jsx("button", {
+                      className: "hover:text-primary transition-colors cursor-pointer text-center md:text-right",
+                      onClick: () => window.openLegalModal && window.openLegalModal("faq"),
+                      children: "Preguntas Frecuentes"
+                    }),
+                    b.jsx("button", {
+                      className: "hover:text-primary transition-colors cursor-pointer text-center md:text-right",
+                      onClick: () => window.openLegalModal && window.openLegalModal("aviso-legal"),
+                      children: "Aviso Legal & Propiedad"
+                    })
+                  ]
+                })
+              ]
+            })
           ],
         }),
       }),
