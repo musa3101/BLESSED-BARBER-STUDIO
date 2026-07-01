@@ -12,12 +12,12 @@
     <!-- Open Graph / Social -->
     <meta property="og:title" content="Blessed Barber Studio — Barbería en Palma de Mallorca">
     <meta property="og:description" content="Barbería premium en Palma. Cortes de pelo, degradados, arreglos de barba y más. Reserva tu cita online.">
-    <meta property="og:image" content="./opengraph.jpg">
+    <meta property="og:image" content="./images/logo.png">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_ES">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Blessed Barber Studio — Barbería en Palma de Mallorca">
-    <meta name="twitter:image" content="./opengraph.jpg">
+    <meta name="twitter:image" content="./images/logo.png">
     <meta name="twitter:description" content="Barbería premium en Palma. Cortes de pelo, degradados, arreglos de barba y más.">
 
     <!-- Favicon -->
@@ -34,6 +34,7 @@
 
     <!-- App -->
     <script type="module" crossorigin src="./assets/index-gynIhAn1.js?v=7"></script>
+    <script type="module" src="./supabase-integration.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-nloeWNVQ.css">
     <link rel="stylesheet" href="./assets/redesign.css?v=4">
 
@@ -96,7 +97,7 @@
               </div>
               <div>
                 <strong style="color:#FFFFFF; font-size:0.95rem; display:block; margin-bottom:0.25rem;">2. ¿Qué métodos de pago tenéis disponibles?</strong>
-                <p style="margin:0;">Para tu total comodidad, en el local aceptamos pagos en <strong>efectivo</strong>, transferencias instantáneas mediante <strong>Bizum</strong> y cobros con <strong>tarjetas de crédito y débito</strong> (Visa, Mastercard, etc.).</p>
+                <p style="margin:0;">Para tu total comodidad, en el local aceptamos pagos en <strong>efectivo</strong> y cobros con <strong>tarjetas de crédito y débito</strong> (Visa, Mastercard, etc.).</p>
               </div>
               <div>
                 <strong style="color:#FFFFFF; font-size:0.95rem; display:block; margin-bottom:0.25rem;">3. ¿Dónde está ubicado el estudio y cuál es su horario?</strong>
@@ -116,6 +117,7 @@
             <p><strong>2. Derechos sobre el Contenido de Blessed Barber Studio:</strong><br>Los derechos comerciales sobre el logotipo, las fotografías de cortes de cabello e instalaciones de la barbería expuestos en este sitio web corresponden de forma íntegra a Blessed Barber Studio. Queda terminantemente prohibido extraer, descargar, re-hostear o copiar cualquiera de las imágenes y recursos multimedia aquí mostrados.</p>
             <p><strong>3. Restricciones de Copia y Uso Ilícito:</strong><br>Se prohíbe de forma expresa a terceros cualquier intento de plagio del diseño web, clonado de código HTML/JS/CSS, ingeniería inversa de los bundles o comercialización y explotación sin una licencia escrita concedida de manera oficial por <strong>MYNEXT</strong>. Cualquier copia parcial o réplica fraudulenta será denunciada bajo la legislación comunitaria europea de patentes y propiedad intelectual.</p>
             <p><strong>4. Entorno de Ejecución:</strong><br>La plataforma y los créditos de diseño de este portal web de Blessed Barber Studio pertenecen de forma exclusiva al portafolio digital de <a href="https://mynextbymusa.pages.dev/" target="_blank" style="color:#B71C1C;text-decoration:underline;font-weight:bold;">MYNEXT</a>.</p>
+            <p><strong>5. Contacto Comercial y Soporte:</strong><br>Para cualquier consulta comercial, de privacidad o soporte, puedes ponerte en contacto directamente con el estudio en: <a href="mailto:blessedbarberstudio12@gmail.com" style="color:#B71C1C;text-decoration:underline;font-weight:bold;">blessedbarberstudio12@gmail.com</a>.</p>
           `
         }
       };
@@ -186,6 +188,25 @@
             });
         }, 100);
 
+        // --- Helper for Caching Videos ---
+        const preloadVideo = async (url) => {
+          try {
+            const cache = await caches.open('blessed-video-cache');
+            let response = await cache.match(url);
+            if (!response) {
+              await cache.add(url);
+              response = await cache.match(url);
+            }
+            if (response) {
+              const blob = await response.blob();
+              return URL.createObjectURL(blob);
+            }
+          } catch (e) {
+            console.warn("Cache API failed, falling back to direct URL", e);
+          }
+          return url;
+        };
+
         // --- 2. Gallery Video Injection & Interaction ---
         const handleGallery = debounce(() => {
           const cards = document.querySelectorAll('.gallery-card');
@@ -211,11 +232,12 @@
                   img.style.display = 'none';
                 }
 
-                video.dataset.src = videoSources[i];
+                const rawSrc = videoSources[i];
+                video.dataset.src = rawSrc;
                 video.muted = true;
                 video.loop = true;
                 video.playsInline = true;
-                video.preload = 'metadata';
+                video.preload = 'auto';
                 video.setAttribute('muted', '');
                 video.setAttribute('playsinline', '');
                 
@@ -224,8 +246,15 @@
                 video.style.height = '100%';
                 video.style.objectFit = 'cover';
                 
+                // Preload video as Blob to ensure instantaneous playing
+                preloadVideo(rawSrc).then(blobUrl => {
+                  video.src = blobUrl;
+                  if (card.classList.contains('visible-on-screen')) {
+                    video.play().catch(e => {});
+                  }
+                });
+
                 const playVideo = () => {
-                    if (!video.getAttribute('src')) video.setAttribute('src', video.dataset.src);
                     video.play().catch(e => {});
                     video.style.transform = 'scale(1.03)';
                 };
@@ -237,10 +266,8 @@
                 card.addEventListener('mouseenter', playVideo);
                 card.addEventListener('mouseleave', pauseVideo);
                 
-                // Add click toggle for better accessibility / touch devices
                 card.addEventListener('click', (e) => {
                     if (video.paused) {
-                        if (!video.getAttribute('src')) video.setAttribute('src', video.dataset.src);
                         video.play().catch(e => {});
                     } else {
                         video.pause();
@@ -254,9 +281,10 @@
                 const lazyVideoObserver = new IntersectionObserver((entries) => {
                   entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                      if (!video.getAttribute('src')) video.setAttribute('src', video.dataset.src);
-                      video.play().catch(e => {});
+                      card.classList.add('visible-on-screen');
+                      if (video.src) video.play().catch(e => {});
                     } else {
+                      card.classList.remove('visible-on-screen');
                       video.pause();
                     }
                   });
@@ -313,19 +341,36 @@
             mapObserver.observe(mapContainer);
           }
 
-          const footerPs = document.querySelectorAll('p');
-          const copyrightP = Array.from(footerPs).find(p => p.textContent.includes('Blessed Barber Studio. Todos los derechos reservados.'));
+          const footer = document.querySelector('footer');
+          const gridContainer = footer ? footer.querySelector('.container') : null;
+          const copyrightP = Array.from(document.querySelectorAll('p')).find(p => p.textContent.includes('Blessed Barber Studio. Todos los derechos reservados.'));
           
-          if (copyrightP && !document.getElementById('mynext-credit')) {
-            const creditP = document.createElement('p');
-            creditP.id = 'mynext-credit';
-            creditP.className = 'mynext-credit';
-            creditP.innerHTML = 'Made by <a href="https://mynextbymusa.pages.dev/" target="_blank" rel="noopener noreferrer" class="mynext-link">MYNEXT</a>';
+          if (footer && gridContainer && copyrightP) {
+            let bottomContainer = document.getElementById('footer-bottom-row');
+            if (!bottomContainer) {
+              bottomContainer = document.createElement('div');
+              bottomContainer.id = 'footer-bottom-row';
+              bottomContainer.className = 'w-full mt-10 pt-8 border-t border-white/5 flex flex-col items-center gap-2 text-center col-span-full md:col-span-3';
+              gridContainer.appendChild(bottomContainer);
+            }
             
-            const oldCredit = document.getElementById('musa-credit');
-            if (oldCredit) oldCredit.remove();
-
-            copyrightP.parentNode.appendChild(creditP);
+            if (copyrightP.parentNode !== bottomContainer) {
+              bottomContainer.appendChild(copyrightP);
+            }
+            
+            let creditP = document.getElementById('mynext-credit');
+            if (!creditP) {
+              creditP = document.createElement('p');
+              creditP.id = 'mynext-credit';
+              creditP.className = 'mynext-credit';
+              creditP.innerHTML = 'Made by <a href="https://mynextbymusa.pages.dev/" target="_blank" rel="noopener noreferrer" class="mynext-link">MYNEXT</a>';
+              const oldCredit = document.getElementById('musa-credit');
+              if (oldCredit) oldCredit.remove();
+            }
+            
+            if (creditP.parentNode !== bottomContainer) {
+              bottomContainer.appendChild(creditP);
+            }
           }
 
           document.querySelectorAll('a:not(.esencia-applied), button:not(.esencia-applied), h2:not(.esencia-applied), h3:not(.esencia-applied), span:not(.esencia-applied)').forEach(el => {

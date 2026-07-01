@@ -1516,3 +1516,100 @@ footer img {
     font-size: 1rem !important;
     background: rgba(255, 255, 255, 0.1) !important;
 }
+
+/* Custom Footer Styling Optimization */
+footer {
+    background: #000000 !important; /* Pure Black background */
+    background-image: none !important;
+    padding-top: 5rem !important;
+    padding-bottom: 6rem !important;
+}
+
+footer .text-primary.font-serif {
+    color: #ffffff !important; /* Premium White title */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    margin-top: 0.5rem !important;
+}
+
+/* Darle más espacio a los títulos h4 */
+footer h4 {
+    margin-bottom: 1.5rem !important;
+}
+
+/* Separar los enlaces de las listas para que respiren */
+footer div.flex-col a,
+footer div.flex-col button {
+    margin-bottom: 0.8rem !important; /* Espaciado cómodo entre links */
+}
+
+footer div.flex-col a:last-child,
+footer div.flex-col button:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Espacio entre el logo y redes sociales */
+footer img + div + div {
+    margin-top: 0.5rem !important;
+}
+
+/* Separación entre columnas en móvil */
+@media (max-width: 768px) {
+    footer .grid {
+        gap: 4.5rem !important; /* Espaciado amplio entre bloques en móvil */
+    }
+}
+
+#footer-bottom-row {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding-top: 2rem !important;
+    margin-top: 3.5rem !important;
+}
+
+#footer-bottom-row p {
+    margin: 0.4rem 0 !important;
+}
+
+@media (max-width: 768px) {
+    #footer-bottom-row {
+        margin-top: 2rem !important;
+        padding-top: 1.5rem !important;
+    }
+}
+
+/* Mobile Menu Close Button & Header Overlap Fix */
+[class*="bg-background"][class*="border-l"] button[type="button"][class*="absolute"] {
+    right: 1.25rem !important;
+    top: 1.25rem !important;
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid rgba(183, 28, 28, 0.4) !important;
+    border-radius: 4px !important;
+}
+
+[class*="bg-background"][class*="border-l"] button[type="button"][class*="absolute"] svg,
+[class*="bg-background"][class*="border-l"] button[type="button"][class*="absolute"] span {
+    width: 10px !important;
+    height: 10px !important;
+}
+
+/* Evitar que el título se encime sobre el botón de cerrar */
+[class*="bg-background"][class*="border-l"] div.flex.items-center.gap-3.px-6.pt-6 {
+    padding-right: 3.8rem !important; 
+}
+
+/* Cambiar el color del título en el menú a blanco y hacerlo más legible */
+[class*="bg-background"][class*="border-l"] div.text-primary.font-serif.text-lg {
+    color: #ffffff !important;
+    font-size: 1.05rem !important;
+    line-height: 1.2 !important;
+}
+
+@media (max-width: 360px) {
+    [class*="bg-background"][class*="border-l"] div.text-primary.font-serif.text-lg {
+        font-size: 0.95rem !important;
+    }
+}
